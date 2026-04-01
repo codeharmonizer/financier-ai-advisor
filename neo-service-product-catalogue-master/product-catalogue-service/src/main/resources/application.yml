@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${pg_read_db_host:localhost:5432}/${pg_db_name:neo_service_product_catalogue}?socketTimeout=${socketTimeout:10}&statement_timeout=10000
+    jdbc-url: ${spring.datasource.replica.url}
+    username: ${pg_db_username:ila}
+    password: ${pg_db_password:Pa55w0rd}
+    hikari:
+      maximum-pool-size: ${pool_maximum_size:10}
+  profiles:
+    active: local
+  jackson:
+    default-property-inclusion: non_null
+
+logging:
+  config: classpath:logback/logback-${spring.profiles.active}.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "loggers, info, health"
+
+contentful:
+  accessToken: CLmtELj8A0Bp_9MqizCeqvo0MMgyi2l6o9-sdskXIj8
+  spaceId: 2c8e80nprabl
+  environmentId: SIT
+  ilabankspace:
+    accessToken: 6KIOX0y0dHkv7dgZoXQu-PXr34eEnotPxY1wQAO5mZw
+    spaceId: dh72gzoq5i91
+    environmentId: UAT
+
+# Directus (for migration from Contentful)
+directus:
+  baseUrl: ${DIRECTUS_BASE_URL:http://192.99.71.200:8055}
+  token: ${DIRECTUS_TOKEN:}
+  collections:
+    offers: ${DIRECTUS_COLLECTION_OFFERS:cf_offers}
+    products: ${DIRECTUS_COLLECTION_PRODUCTS:cf_product}
+    atm: ${DIRECTUS_COLLECTION_ATM:cf_openbankingatminfo}
+    branches: ${DIRECTUS_COLLECTION_BRANCHES:cf_openbankingbranchinfo}
+    offersCategory: ${DIRECTUS_COLLECTION_OFFERS_CATEGORY:cf_offercategory}
+    offersSubProducts: ${DIRECTUS_COLLECTION_OFFERS_SUBPRODUCTS:cf_subproduct}
+    competitions: ${DIRECTUS_COLLECTION_COMPETITIONS:cf_ilacompetition}
+    appBranches: ${DIRECTUS_COLLECTION_APP_BRANCHES:cf_appbranches}
+    merchantCategory: ${DIRECTUS_COLLECTION_MERCHANT_CATEGORY:cf_merchantcategory}
+    merchants: ${DIRECTUS_COLLECTION_MERCHANTS:cf_merchants}
+    merchantCode: ${DIRECTUS_COLLECTION_MERCHANT_CODE:cf_mcccode}

@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS unit;
+DROP TABLE IF EXISTS language;

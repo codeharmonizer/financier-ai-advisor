@@ -1,0 +1,112 @@
+[
+  {
+    "name": "datr",
+    "value": "gpVraEvZcW5_-uGwPqT8KPWH",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1786441090
+  },
+  {
+    "name": "ig_did",
+    "value": "1D02EBD3-A3FA-4060-9C0A-688F5786EAAD",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1783417109
+  },
+  {
+    "name": "ig_nrcb",
+    "value": "1",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1783417094
+  },
+  {
+    "name": "mid",
+    "value": "aGufMAAEAAHprDbzZebMkGpv1b3c",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1786443568
+  },
+  {
+    "name": "ds_user_id",
+    "value": "200298243",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1782770749
+  },
+  {
+    "name": "csrftoken",
+    "value": "wbZJ36d9r7qBNhWOmQZXCRB2fk0GW5mI",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1809554749
+  },
+  {
+    "name": "ps_l",
+    "value": "1",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1805130020
+  },
+  {
+    "name": "ps_n",
+    "value": "1",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1805130020
+  },
+  {
+    "name": "sessionid",
+    "value": "200298243%3ADV0wZFM7wl10qs%3A0%3AAYinl34fNAK8zheHcuLIXq1nOiFMwmE4IelJwBz--A",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1806528699
+  },
+  {
+    "name": "wd",
+    "value": "1728x333",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 1775599544
+  },
+  {
+    "name": "rur",
+    "value": "LDC,200298243,1806530749:01fe56e9db4018c965896c466eaf4ad641bfbc122beab551de212d9609e230b8612a68ba",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax",
+    "expires": 0
+  }
+]

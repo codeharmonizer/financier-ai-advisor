@@ -1,0 +1,1150 @@
+openapi: '3.0.2'
+info:
+  title: Product Catalogue Service Specs
+  version: '0.0.1'
+servers:
+  - url: '{protocol}://localhost/v1'
+    variables:
+      protocol:
+        enum:
+          - https
+        default: https
+paths:
+  /product-catalogue/products:
+    get:
+      summary: Get ila Products
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ProductListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Products found
+  /product-catalogue/offers:
+    get:
+      summary: Get ila Offers
+      parameters:
+        - in: query
+          name: language
+          description: Offer Language
+          required: false
+          schema:
+            type: string
+            example: "en"
+        - in: query
+          name: unit
+          description: Offer Unit
+          required: false
+          schema:
+            type: string
+            example: "neo"
+        - in: header
+          name: customerId
+          description: Customer ID (CIF)
+          required: false
+          schema:
+            type: string
+        - in: header
+          name: isNewOfferOnly
+          description: flag to filter only new offer
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - in: header
+          name: offerCategory
+          description: Offer Category to be searched
+          required: false
+          schema:
+            type: string
+        - in: header
+          name: offerProduct
+          description: Offer Category to be searched
+          required: false
+          schema:
+            type: string
+            example: "Credit Card"
+        - in: header
+          name: offerSubProduct
+          description: Offer sub-product to be searched
+          required: false
+          schema:
+            type: string
+            example: "ila Blue"
+        - in: header
+          name: onlyCustomerApplicableOffer
+          description: flag to filter only customer applicable products based on CIF and eligibility tags from analytical platform
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/OffersListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Products found
+    delete:
+      summary: Cache invalidation endpoint
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessWithoutData'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Products found
+  /product-catalogue/prizeout-gift-cards:
+    get:
+      summary: GET ILA  Prize Out Gift Cards
+      parameters:
+        - in: query
+          name: language
+          description: Gift Card Language
+          required: false
+          schema:
+            type: string
+            example: "en"
+        - in: query
+          name: unit
+          description: Gift Card  Unit
+          required: false
+          schema:
+            type: string
+            example: "neo"
+        - in: header
+          name: customerId
+          description: Customer ID (CIF)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/GiftCardResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Gift Card found
+    delete:
+      summary: Cache invalidation endpoint
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessWithoutData'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Gift Card not found
+  /product-catalogue/branches:
+    get:
+      summary: Get ila ATM branches
+      parameters:
+        - in: query
+          name: language
+          description: Branch Language
+          required: false
+          schema:
+            type: string
+            example: "en"
+        - in: query
+          name: unit
+          description: Branch Unit
+          required: false
+          schema:
+            type: string
+            example: "neo"
+        - in: header
+          name: customerId
+          description: Customer ID (CIF)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/AppBranchesListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Products found
+  /product-catalogue/competition:
+    get:
+      summary: Get ila competition
+      parameters:
+        - in: query
+          name: language
+          description: Offer Language
+          required: false
+          schema:
+            type: string
+            example: "en"
+        - in: query
+          name: unit
+          description: Unit
+          required: false
+          schema:
+            type: string
+            example: "neo"
+        - in: header
+          name: customerId
+          description: Customer ID (CIF)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/CompetitionListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Products found
+  /product-catalogue/merchant:
+    get:
+      summary: Get ila Merchants
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/MerchantListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Merchants found
+    delete:
+      summary: Cache invalidation endpoint
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessWithoutData'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Merchants found
+  /product-catalogue/merchant/code:
+    get:
+      summary: Get ila Merchants code
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/MerchantCodeListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Merchants code found
+  /product-catalogue/merchant/category:
+    get:
+      summary: Get ila Products
+      responses:
+        '200':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/CategoryListResponse'
+          description: OK
+        '404':
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: No Products found
+components:
+  schemas:
+    Meta:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: 'GENE-0001'
+          description: The code associated with the successful operation.
+        message:
+          type: string
+          example: message
+          description: The message for the client
+    ApiError:
+      type: object
+      required:
+        - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/ErrorMetaInformation'
+      title: ApiError
+    ApiSuccessWithoutData:
+      type: object
+      required:
+        - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+      title: ApiError
+    ErrorMetaInformation:
+      type: object
+      required:
+        - code
+        - errorType
+        - message
+      properties:
+        code:
+          type: string
+          example: 20025
+          description: code associated with the error
+        errorType:
+          type: string
+          example: INTERNAL_SERVER_ERROR
+          description: error type
+          enum:
+            - VALIDATION_ERROR
+            - INTERNAL_SERVER_ERROR
+            - RESOURCE_NOT_FOUND
+        message:
+          type: string
+          example: 'Failure to process <request>. Reason: <reason-phrase>'
+          description: message
+      title: ErrorMetaInformation
+    ProductListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/ProductListData'
+    ProductListData:
+      type: object
+      properties:
+        casaProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetails'
+        atmList:
+          type: array
+          items:
+            $ref: '#/components/schemas/AtmDetails'
+        branchesList:
+          type: array
+          items:
+            $ref: '#/components/schemas/BranchDetails'
+    ProductDetails:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: "123456"
+          description: Product Id
+        productCategory:
+          type: string
+          example: "Account"
+          description: Product Category
+        productCategoryCode:
+          type: string
+          example: "ACC"
+          description: Product Category Code
+        productName:
+          type: string
+          example: "Saving Account"
+          description: Product Name
+        productDescription:
+          type: string
+          example: Saving Account
+          description: Product Description
+        subProductCode:
+          type: string
+          example: iSA
+          description: Sub-Product Code
+        productSegment:
+          type: string
+          example: travel
+          description: Product classification
+        productFeatures:
+          $ref: '#/components/schemas/ProductFeatures'
+        productEligibility:
+          $ref: '#/components/schemas/ProductEligibility'
+        productBenefits:
+          $ref: '#/components/schemas/ProductBenefits'
+        productTermsAndConditions:
+          $ref: '#/components/schemas/ProductTnC'
+    ProductFeatures:
+      type: object
+      properties:
+        productCurrency:
+          type: string
+          example: BHD
+          description: Payment and transaction currency as applicable on the product
+        productMinBalance:
+          type: number
+          example: 0
+          description: Minimum balance to be maintained by the account holder in BHD
+        productHandlingFees:
+          type: number
+          example: 0
+          description: Account handling fees applicable for products in BHD excluding taxes per annum
+        productInterestRates:
+          type: number
+          example: 0
+          description: Interest payable on repayment of the loan amount- In Islamic banking, this field is referred to as Profit/Charge
+        productDepositRate:
+          type: number
+          example: 0
+          description: Interest rate applicable for deposits only- In Islamic banking, this field is referred to as Profit/Charge
+        productMinDepositAmount:
+          type: number
+          example: 0
+          description: Minimum one time deposit amount in BHD
+    ProductEligibility:
+      type: object
+      properties:
+        requiredDocuments:
+          type: string
+          example: CPR, Driving License, Passport
+          description: Documents required for opening a current account
+        minimumAge:
+          type: number
+          example: 18
+          description: Minimum Age of the applicant
+        employmentStatus:
+          type: string
+          example: Employed, Self-Employed
+          description: Employment status of the applicant
+        incomeRange:
+          type: string
+          example: 1 - 1000000 BHD
+          description: Income of the applicant
+        creditScore:
+          type: string
+          example: Any
+          description: Credit score of the applicant
+    ProductBenefits:
+      type: object
+      properties:
+        relationshipManager:
+          type: string
+          example: Not Applicable
+          description: This covers the benefits of availing RM under few conditions
+        overDraftProtection:
+          type: string
+          example: Not Applicable
+          description: Enjoy Current Account Overdraft Protection for clearing cheques
+        minimumBalance:
+          type: number
+          example: 0
+          description: This describes the minimum balance required to keep the account active
+        autoPaySetup:
+          type: string
+          example: Not Applicable
+          description: One-stop pay
+        multipleDebitCards:
+          type: string
+          example: Not Applicable
+          description: This includes details of add on debit cards where a account holder can apply for add-on cards for his/her employees under the same account
+        eChequeAllowed:
+          type: string
+          example: Not Applicable
+          description: Option of E-cheque clearance
+        OtherBenefits:
+          type: string
+          example: Non
+          description: Additional benefits if any
+    ProductTnC:
+      type: object
+      properties:
+        tncTitle:
+          type: string
+          example: ila bank Account opening terms and conditions
+          description: Terms and conditions title
+        tncSummery:
+          type: string
+          example: ""
+          description: Any material conditions and specific features such as salary transfer, minimum equity for mortgage facility, loan to value ratio etc.
+        tncUrl:
+          type: string
+          example: "https://ilabank.com/tnc"
+          description: Terms and conditions URL
+    OfferCategoryLink:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Hotels
+          description: Category Name
+        categoryId:
+          type: string
+          example: "012331-21564-sat"
+          description: Offer Category ID
+    OfferCategory:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Hotels
+          description: Category Name
+        categoryId:
+          type: string
+          example: "012331-21564-sat"
+          description: Offer Category ID
+        startGradientColor:
+          type: string
+          example: "#23123F"
+          description: Start GradientColor
+        endGradientColor:
+          type: string
+          example: "#23111C"
+          description: End GradientColor
+        categoryBaseImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/baseImgE.jpeg"
+          description: End GradientColor
+        displayOrder:
+          type: integer
+          example: 5
+          description: Display order in front end
+    SubProductsLink:
+      type: object
+      properties:
+        name:
+          type: string
+          example: ila Blue
+          description: Category Name
+        subProductId:
+          type: string
+          example: "012331-21564-sun"
+          description: sub-product ID
+    OfferSubProduct:
+      type: object
+      properties:
+        subProduct:
+          $ref: '#/components/schemas/SubProductsLink'
+        tag:
+          type: string
+          example: Most Used
+          description: display tag
+        mainProduct:
+          type: string
+          example: Credit Card
+          description: main product type
+        offerBenefits:
+          type: string
+          example: "10% Off"
+          description: sub-product offer value
+        displayOrder:
+          type: integer
+          example: 5
+          description: display order
+    SubProducts:
+      type: object
+      properties:
+        name:
+          type: string
+          example: ila Blue
+          description: sub-product Name
+        subProductId:
+          type: string
+          example: "012331-21564-sun"
+          description: sub-product ID
+        subProductBaseImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/ilablue.jpeg"
+          description: sub-product Image URL
+        displayOrder:
+          type: integer
+          example: 5
+          description: Display order in front end
+    CompetitionListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/CompetitionListData'
+    CompetitionListData:
+      type: object
+      properties:
+        Competitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompetitionData'
+    CompetitionData:
+      type: object
+      properties:
+        competitionId:
+          type: string
+          example: competition1
+          description: Competition Id
+        competitionTitle:
+          type: string
+          example: Get 10% Cashback on your total bill!
+          description: Competition Title
+        competitionDescription:
+          type: string
+          example: 012331-21564-satwww-014d1
+          description: Competition Description
+        competitionImageEn:
+          type: string
+          example: https://images.ctfassets.net/2c8e80nprabl/46AFBa8GbrXdqLECwFZnVD/9bcba00afd907f5dcb7c11aee87dfb06/Entertainment.png
+          description: Competition Image En
+        competitionImageAr:
+          type: string
+          example: https://images.ctfassets.net/2c8e80nprabl/46AFBa8GbrXdqLECwFZnVD/9bcba00afd907f5dcb7c11aee87dfb06/Entertainment.png
+          description: Competition Image Ar
+        competitionCoverImage:
+          type: string
+          example: https://images.ctfassets.net/2c8e80nprabl/46AFBa8GbrXdqLECwFZnVD/9bcba00afd907f5dcb7c11aee87dfb06/Entertainment.png"
+          description: Competition Cover Image
+        competitionButtonVisibility:
+          type: boolean
+          example: true
+          description: Competition Button Visibility
+        buttonCaption:
+          type: string
+          example: Apply for a Credit Card
+          description: Button Caption
+        buttonNavigationAction:
+          type: string
+          example: bb.action.ongoing.competition.open
+          description: Offer main product
+        buttonNavigationActionLink:
+          type: string
+          example: {'tab': 1, 'navigation': 'bb.terms', 'widget': { 'name': 'CreditCardsOverviewWidget', 'tab': 1 }}
+          description: Button Navigation Action Link
+        competitionStartDate:
+          type: string
+          example: "23-02-2023"
+          description: Competition Start Date
+        competitionEndDate:
+          type: string
+          example: "23-02-2023"
+          description: Competition End Date
+        isKanzCompetition:
+          type: boolean
+          example: Kanz Competition
+          description: Kanz Competition
+        unit:
+          type: string
+          example: ila
+          description: ila
+        sort:
+          type: integer
+          example: 1
+          descriptn: asc
+    OffersListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/OffersListData'
+    OffersListData:
+      type: object
+      properties:
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OfferDetails'
+        offerCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/OfferCategory'
+        SubProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubProducts'
+        accountId:
+          type: string
+          example: BH23ABCO00290202
+          description: Account Id used to invoke the endpoint
+    OfferDetails:
+      type: object
+      properties:
+        offerId:
+          type: string
+          example: 012331-21564-satwww-014d1
+          description: Offer title
+        offerProduct:
+          type: string
+          example: Credit Card
+          description: Offer main product
+        offerTitle:
+          type: string
+          example: Test Offer
+          description: Offer title
+        offerDescription:
+          type: string
+          example: enjoy this test offer while using our card.
+          description: Offer Description
+        offerDiscountRate:
+          type: string
+          example: 30% off
+          description: Offer Description
+        offerValue:
+          type: number
+          example: 0
+          description: for BOBF first launch it will be defaulted to 0
+        offerCategory:
+          $ref: '#/components/schemas/OfferCategoryLink'
+        offerPageUrl:
+          type: string
+          example: "https://ilabank.com/Offers"
+          description: offer(s) page URL
+        offerImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/offer.jpeg"
+          description: offer display image
+        offerBrandImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/brandLogo.jpeg"
+          description: offer brand display image
+        offerBrandName:
+          type: string
+          example: "Careem"
+          description: offer brand name
+        offerListImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/offerMobileImage.jpeg"
+          description: offer brand name
+        offerListSmallImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/offerMobileImageSmall.jpeg"
+          description: offer brand name
+        offerDetailsImageUrl:
+          type: string
+          example: "https://ilabank.com/resources/images/offerMobileImageDetails.jpeg"
+          description: offer brand name
+        offerTermsAndConditions:
+          type: string
+          example: "Only used once"
+          description: offer Ts&Cs
+        isNewOffer:
+          type: boolean
+          example: true
+          description: flag the is set to true if the offer is added to the New category
+        offerTag:
+          type: string
+          example: "Expires Soon"
+          description: offer Tag for display
+        offerDisplayOrder:
+          type: integer
+          example: 2000
+          description: Offer display order
+        offerEligibilityTags:
+          type: string
+          example: "UseFawateerDirectDebit,EarlyPayer"
+          description: Offer eligibility tags for customer
+        offerApplicableSubProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OfferSubProduct'
+    AppBranchDetails:
+      type: object
+      properties:
+        unit:
+          type: string
+          example: neo
+          description: ATM branch unit
+        gpsCoordinates:
+          type: string
+          example: 31.96769818,35.89902734
+          description: ATM branch location coordinates
+        atmId:
+          type: string
+          example: atm-123
+          description: ATM branch Id
+        governorate:
+          type: string
+          example: Amman
+          description: ATM branch governorate
+        locationName:
+          type: string
+          example: Shmaisani Branch ATM
+          description: ATM branch location
+        workingHours:
+          type: string
+          example: 24/7
+          description: ATM service working hours
+        cashDeposit:
+          type: string
+          example: Yes
+          description: Availability of Cash deposit service
+        address:
+          type: string
+          example: ABC Branch, Abdulhamed Shoman Street 10, 11187 Amman, Jordan
+          description: ATM branch address
+        channelType:
+          type: string
+          example: ATM, Branch, All
+          description: ATM, Branch, All
+        channelUnit:
+          type: string
+          example: ABC,ila
+          description: ABC,ila
+    AppBranchesListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/AppBranchesListData'
+    AppBranchesListData:
+      type: object
+      properties:
+        governorates:
+          type: array
+          items:
+            type: string
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppBranchDetails'
+        accountId:
+          type: string
+          example: BH23ABCO00290202
+          description: Account Id used to invoke the endpoint
+    CategoryListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/CategoryListData'
+    CategoryListData:
+      type: object
+      properties:
+        merchantCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDetail'
+    CategoryDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "123456"
+          description: Category Id
+        name:
+          type: string
+          example: "Ajith"
+          description: Category name
+        iconLabelUrl:
+          type: string
+          example: "https://example.com/2.png"
+          description: Icon Label URL
+        icon:
+          type: string
+          example: "https://example.com/3.png"
+          description: Icon url
+        color:
+          type: string
+          example: "https://example.com/3.png"
+          description: Icon color
+        fontColor:
+          type: string
+          example: "https://example.com/3.png"
+          description: font Color
+        displayOrder:
+          type: integer
+          example: "1"
+          description: Category order
+    MerchantListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/MerchantListData'
+    MerchantListData:
+      type: object
+      properties:
+        merchants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MerchantDetail'
+    MerchantDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "123456"
+          description: Category Id
+        name:
+          type: string
+          example: "Ajith"
+          description: Category name
+        revisedName:
+          type: string
+          example: "Test"
+          description: Revised Name
+        filter:
+          type: string
+          example: "DEFAULT"
+          enum:
+            - DEFAULT
+            - STARTS_WITH
+            - CONTAINS
+            - ENDS_WITH
+          description: Filter
+        logoUrl:
+          type: string
+          example: "https://example.com/2.png"
+          description: Logo Url
+        contentfulMerchantCategory:
+          $ref: '#/components/schemas/CategoryDetail'
+          description: Icon url
+        displayOrder:
+          type: integer
+          example: "1"
+          description: Category order
+        unit:
+          type: array
+          items:
+            type: string
+          example:
+            - ALBURAQ
+            - BH
+    MerchantCodeListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/MerchantCodeListData'
+    MerchantCodeListData:
+      type: object
+      properties:
+        merchantCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MerchantCodeDetail'
+    MerchantCodeDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "123456"
+          description: Category Id
+        code:
+          type: string
+          example: "Ajith"
+          description: Category name
+        revisedName:
+          type: string
+          example: "Test"
+          description: Revised Name
+        logoUrl:
+          type: string
+          example: "https://example.com/2.png"
+          description: Logo Url
+        contentfulMerchantCategory:
+          $ref: '#/components/schemas/CategoryDetail'
+          description: Icon url
+        displayOrder:
+          type: integer
+          example: "1"
+          description: Category order
+    AtmDetails:
+      type: object
+      properties:
+        atmId:
+          type: string
+          example: 012331-21564-satwww-014d1
+          description: ATM ID
+        atmServices:
+          type: array
+          items:
+            type: string
+        atmAccessibility:
+          type: array
+          items:
+            type: string
+        atmTime24HIdentifier:
+          type: string
+          example: Available
+          description: 24 H. Identifier
+        atmSupportedLanguages:
+          type: array
+          items:
+            type: string
+        atmSupportedCurrencies:
+          type: array
+          items:
+            type: string
+        atmMinimumAmount:
+          type: number
+          example: 500
+          description: Minimum Amount
+        atmLocationCategory:
+          type: string
+          example: BranchExternal
+          description: ATM Location Category
+        atmAddress:
+          $ref: '#/components/schemas/LocationInformation'
+    LocationInformation:
+      type: object
+      properties:
+        addressLine:
+          type: string
+          example: "B: 111 R: 222 Manama 333 Kingodom of Bahrain"
+          description: Address Line
+        streetName:
+          type: string
+          example: Al Motanabee
+          description: Address Street Name
+        buildingNumber:
+          type: string
+          example: Building 152
+          description: Address Building Number
+        townName:
+          type: string
+          example: Manama
+          description: Address Town Name
+        countrySubDivision:
+          type: string
+          example: Capital Governorate
+          description: Address Country Sub Division
+        country:
+          type: string
+          example: Kingdom of Bahrain
+          description: Address Country
+        locationLatitude:
+          type: string
+          example: 26.24383412531326
+          description: Location Latitude
+        locationLongitude:
+          type: string
+          example: 26.24383412531326
+          description: Location Longitude
+    BranchDetails:
+      type: object
+      properties:
+        branchId:
+          type: string
+          example: SC
+          description: branch Id
+        branchName:
+          type: string
+          example: Service Center
+          description: branch Name
+        branchType:
+          type: string
+          example: Physical
+          description: branch type
+        branchAccessibility:
+          type: array
+          items:
+            type: string
+        branchCustomerSegment:
+          type: array
+          items:
+            type: string
+        branchServicesAndFacilities:
+          type: array
+          items:
+            type: string
+        branchSupportedLanguages:
+          type: array
+          items:
+            type: string
+        branchAddress:
+          $ref: '#/components/schemas/LocationInformation'
+        branchContactInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactInfo'
+    ContactInfo:
+      type: object
+      properties:
+        contactType:
+          type: string
+          example: email
+          description: Contact Type
+        contactValue:
+          type: string
+          example: email@org.dom
+          description: Contact Info value
+        contactDescription:
+          type: string
+          example: description
+          description: Contact Description
+    GiftCardResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/PrizeoutGiftResponse'
+    PrizeoutGiftResponse:
+      type: object
+      properties:
+        prizeoutGiftCards:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "Bahrain"
+                description: name
+              order:
+                type: integer
+                example: 1
+                description: order id
+              image:
+                type: string
+                example:  "https://ilabank.com/resources/images/giftimage.jpeg"
+                description: image
+              region:
+                type: string
+                example: "https://ilabank.com/resources/images/regionlogo.jpeg"
+                description: region

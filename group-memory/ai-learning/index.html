@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Learning — Knowledge Hub</title>
+  <style>
+    :root { --bg:#0b1020; --card:#121933; --line:#273159; --text:#ecf0ff; --muted:#95a1c3; --accent:#7aa2ff; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#0a0f1d,#101830);color:var(--text)}
+    .wrap{max-width:1150px;margin:0 auto;padding:24px}.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{padding:8px 10px;border:1px solid var(--line);background:#121b3e;color:#dfe7ff;border-radius:8px;cursor:pointer}
+    .btn.active{border-color:var(--accent)} select,input{padding:8px;border-radius:8px;border:1px solid var(--line);background:#0f1735;color:#e6edff}
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:14px;margin-top:14px}@media (max-width:940px){.grid{grid-template-columns:1fr}}
+    .item{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;cursor:pointer;background:#101735}.item.active{border-color:var(--accent)}
+    .small{font-size:12px;color:var(--muted)} h1{margin:0 0 6px} h2{margin:0 0 10px;font-size:18px} h3{margin:10px 0 6px;font-size:15px}
+    .tag{display:inline-block;border:1px solid var(--line);padding:2px 7px;border-radius:999px;font-size:12px;margin:2px;color:#cfd8ff}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.muted{color:var(--muted)} a{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>AI Learning — Knowledge Hub</h1>
+      <div class="muted">Default view preserved. Added categorized view + edit + filter + sort.</div>
+      <div class="toolbar">
+        <button id="viewDefault" class="btn active">Default View</button>
+        <button id="viewCategorized" class="btn">Categorized View</button>
+        <input id="q" placeholder="Search title/summary/tag" />
+        <select id="fSubject"><option value="">All Subjects</option></select>
+        <select id="fArea"><option value="">All Areas</option></select>
+        <select id="sortBy">
+          <option value="date_desc">Date newest</option>
+          <option value="date_asc">Date oldest</option>
+          <option value="title_asc">Title A-Z</option>
+          <option value="title_desc">Title Z-A</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card"><h2>Items</h2><div id="list"></div></article>
+      <article class="card"><h2>Details</h2><div id="details" class="muted">Select an item.</div></article>
+    </section>
+  </main>
+
+<script>
+let entries=[], filtered=[], selectedId=null, viewMode='default';
+const listEl=document.getElementById('list'), detailsEl=document.getElementById('details');
+const qEl=document.getElementById('q'), subEl=document.getElementById('fSubject'), areaEl=document.getElementById('fArea'), sortEl=document.getElementById('sortBy');
+
+document.getElementById('viewDefault').onclick=()=>{viewMode='default';toggleBtns();render();};
+document.getElementById('viewCategorized').onclick=()=>{viewMode='categorized';toggleBtns();render();};
+[qEl,subEl,areaEl,sortEl].forEach(el=>el.oninput=render);
+
+function toggleBtns(){
+  document.getElementById('viewDefault').classList.toggle('active',viewMode==='default');
+  document.getElementById('viewCategorized').classList.toggle('active',viewMode==='categorized');
+}
+
+function uniq(vals){return [...new Set(vals.filter(Boolean))].sort();}
+function parseD(v){const t=Date.parse(v||'');return isNaN(t)?0:t;}
+
+function applyFilters(){
+  const q=(qEl.value||'').toLowerCase().trim(), s=subEl.value, a=areaEl.value;
+  let arr=entries.filter(e=>
+    (!s || (e.categorySubject||'Unclassified')===s) &&
+    (!a || (e.categoryArea||'Unclassified')===a)
+  );
+  if(q){arr=arr.filter(e=>{
+    const t=[e.title,e.summary,(e.tags||[]).join(' '),e.categorySubject,e.categoryArea].join(' ').toLowerCase();
+    return t.includes(q);
+  });}
+
+  const sort=sortEl.value;
+  arr.sort((x,y)=>{
+    if(sort==='date_desc') return parseD(y.fetchedAt)-parseD(x.fetchedAt);
+    if(sort==='date_asc') return parseD(x.fetchedAt)-parseD(y.fetchedAt);
+    if(sort==='title_desc') return (y.title||'').localeCompare(x.title||'');
+    return (x.title||'').localeCompare(y.title||'');
+  });
+  return arr;
+}
+
+function render(){
+  filtered=applyFilters();
+  if(!filtered.length){listEl.innerHTML='<div class="muted">No matching entries.</div>'; detailsEl.innerHTML='<div class="muted">No details.</div>'; return;}
+
+  if(!selectedId || !filtered.find(e=>e.id===selectedId)) selectedId=filtered[0].id;
+
+  if(viewMode==='default'){
+    listEl.innerHTML=filtered.map(e=>`<div class="item ${e.id===selectedId?'active':''}" data-id="${e.id}"><div><b>${e.title}</b></div><div class="small">${(e.type||'entry').toUpperCase()} · ${(e.fetchedAt||'').slice(0,10)}</div></div>`).join('');
+  } else {
+    const groups={};
+    for(const e of filtered){
+      const k=`${e.categorySubject||'Unclassified'} › ${e.categoryArea||'Unclassified'}`;
+      (groups[k]=groups[k]||[]).push(e);
+    }
+    listEl.innerHTML=Object.entries(groups).sort(([a],[b])=>a.localeCompare(b)).map(([k,arr])=>`<div style="margin-bottom:10px"><div class="small" style="margin-bottom:6px">${k} (${arr.length})</div>${arr.map(e=>`<div class="item ${e.id===selectedId?'active':''}" data-id="${e.id}"><div><b>${e.title}</b></div><div class="small">${(e.fetchedAt||'').slice(0,10)}</div></div>`).join('')}</div>`).join('');
+  }
+
+  listEl.querySelectorAll('.item').forEach(n=>n.onclick=()=>{selectedId=n.dataset.id;render();});
+  renderDetails(filtered.find(e=>e.id===selectedId));
+}
+
+function renderDetails(e){
+  if(!e) return;
+  detailsEl.innerHTML=`
+    <h3>${e.title||'Untitled'}</h3>
+    <div class="small">${(e.fetchedAt||'').slice(0,19).replace('T',' ')} · ${e.author?('@'+e.author):'unknown author'}</div>
+    <p><a href="${e.sourceUrl}" target="_blank">Open source</a></p>
+
+    <h3>Summary</h3><p>${e.summary||''}</p>
+    <h3>Why it matters</h3><p>${e.whyItMatters||''}</p>
+    <h3>Actions</h3><ul>${(e.actions||[]).map(a=>`<li>${a}</li>`).join('')}</ul>
+    <h3>Tags</h3><div>${(e.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
+
+    <h3>Category (editable)</h3>
+    <div class="row">
+      <select id="editSubject">
+        ${['Unclassified','Agents','Prompting','RAG & Knowledge','Tools & Integrations','Automation','Models & LLMs','Business Use Cases'].map(v=>`<option ${v=== (e.categorySubject||'Unclassified')?'selected':''}>${v}</option>`).join('')}
+      </select>
+      <input id="editSubjectCustom" placeholder="or custom subject" />
+      <select id="editArea">
+        ${['Unclassified','Engineering','Research','Content','Operations','Productivity','Education','Business'].map(v=>`<option ${v=== (e.categoryArea||'Unclassified')?'selected':''}>${v}</option>`).join('')}
+      </select>
+      <input id="editAreaCustom" placeholder="or custom area" />
+      <button class="btn" id="saveCat">Save category</button>
+    </div>
+    <div class="small">Manual edit: ${e.categoryManual ? 'Yes' : 'No'} ${e.categoryEditedAt ? '· '+e.categoryEditedAt : ''}</div>
+  `;
+
+  document.getElementById('saveCat').onclick=async()=>{
+    const subject=(document.getElementById('editSubjectCustom').value||'').trim() || document.getElementById('editSubject').value;
+    const area=(document.getElementById('editAreaCustom').value||'').trim() || document.getElementById('editArea').value;
+    const r=await fetch('/api/update-category',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:e.id,subject,area})});
+    const j=await r.json();
+    if(!j.ok){alert('Save failed: '+(j.error||'unknown'));return;}
+    const idx=entries.findIndex(x=>x.id===e.id); if(idx>=0) entries[idx]=j.entry;
+    refreshFilters(); render();
+  };
+}
+
+function refreshFilters(){
+  const subjects=uniq(entries.map(e=>e.categorySubject||'Unclassified'));
+  const areas=uniq(entries.map(e=>e.categoryArea||'Unclassified'));
+  subEl.innerHTML='<option value="">All Subjects</option>'+subjects.map(s=>`<option>${s}</option>`).join('');
+  areaEl.innerHTML='<option value="">All Areas</option>'+areas.map(s=>`<option>${s}</option>`).join('');
+}
+
+async function init(){
+  const res=await fetch('/api/entries?v='+Date.now());
+  const db=await res.json();
+  entries=(db.entries||[]);
+  refreshFilters();
+  render();
+}
+init();
+</script>
+</body>
+</html>

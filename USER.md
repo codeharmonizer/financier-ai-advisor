@@ -3,7 +3,7 @@
 - **Name:** Salah
 - **What to call them:** Salah
 - **Pronouns:** _(not set yet)_
-- **Timezone:** UTC _(assumed from chat timestamps; confirm)_
+- **Timezone:** Asia/Bahrain (GMT+3)
 - **Notes:**
   - Chose assistant identity as “bro.”
 

@@ -1,0 +1,1 @@
+UPDATE unit SET contentful_value='ALBURAQ' WHERE id=4;

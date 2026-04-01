@@ -1,0 +1,121 @@
+# WhatsApp Reply Kit - Lite
+
+## 001. Pricing Inquiry
+EN: Thanks for your message. The price for [SERVICE] starts from [PRICE] BHD.
+AR: شكرًا لرسالتك. سعر [SERVICE] يبدأ من [PRICE] د.ب.
+
+## 002. Discount Request
+EN: I can offer [DISCOUNT]% for confirmation today.
+AR: أقدر أقدم خصم [DISCOUNT]% في حال التأكيد اليوم.
+
+## 003. Follow-up
+EN: Just checking in 👋 Did you get a chance to review the quote?
+AR: مجرد متابعة سريعة 👋 هل قدرت تراجع عرض السعر؟
+
+## 004. Payment Reminder
+EN: Friendly reminder: invoice #[INV_NO] of [AMOUNT] BHD is due on [DATE].
+AR: تذكير ودي: الفاتورة #[INV_NO] بقيمة [AMOUNT] د.ب مستحقة بتاريخ [DATE].
+
+## 005. Complaint Handling
+EN: Sorry for the inconvenience. I will resolve this by [TIME].
+AR: نعتذر عن الإزعاج، وسيتم حل الموضوع قبل [TIME].
+
+## 006. Appointment Confirmation
+EN: Confirmed ✅ Your booking is on [DATE] at [TIME].
+AR: تم التأكيد ✅ حجزك يوم [DATE] الساعة [TIME].
+
+## 007. Reschedule
+EN: No problem, we can move your booking to [NEW_DATE] at [NEW_TIME].
+AR: أكيد، نقدر نغير الحجز إلى [NEW_DATE] الساعة [NEW_TIME].
+
+## 008. Out of Stock
+EN: This item is currently out of stock. Expected availability: [DATE].
+AR: المنتج غير متوفر حاليًا. التوفر المتوقع: [DATE].
+
+## 009. Upsell
+EN: You may also like [ADDON] for an extra [ADDON_PRICE] BHD.
+AR: ممكن يناسبك أيضًا [ADDON] مقابل [ADDON_PRICE] د.ب إضافية.
+
+## 010. Closing
+EN: Perfect, I’ll proceed now and keep you updated.
+AR: ممتاز، سأبدأ الآن وأوافيك بالتحديثات.
+
+## 011. Pricing Inquiry
+EN: Thanks for your message. The price for [SERVICE] starts from [PRICE] BHD.
+AR: شكرًا لرسالتك. سعر [SERVICE] يبدأ من [PRICE] د.ب.
+
+## 012. Discount Request
+EN: I can offer [DISCOUNT]% for confirmation today.
+AR: أقدر أقدم خصم [DISCOUNT]% في حال التأكيد اليوم.
+
+## 013. Follow-up
+EN: Just checking in 👋 Did you get a chance to review the quote?
+AR: مجرد متابعة سريعة 👋 هل قدرت تراجع عرض السعر؟
+
+## 014. Payment Reminder
+EN: Friendly reminder: invoice #[INV_NO] of [AMOUNT] BHD is due on [DATE].
+AR: تذكير ودي: الفاتورة #[INV_NO] بقيمة [AMOUNT] د.ب مستحقة بتاريخ [DATE].
+
+## 015. Complaint Handling
+EN: Sorry for the inconvenience. I will resolve this by [TIME].
+AR: نعتذر عن الإزعاج، وسيتم حل الموضوع قبل [TIME].
+
+## 016. Appointment Confirmation
+EN: Confirmed ✅ Your booking is on [DATE] at [TIME].
+AR: تم التأكيد ✅ حجزك يوم [DATE] الساعة [TIME].
+
+## 017. Reschedule
+EN: No problem, we can move your booking to [NEW_DATE] at [NEW_TIME].
+AR: أكيد، نقدر نغير الحجز إلى [NEW_DATE] الساعة [NEW_TIME].
+
+## 018. Out of Stock
+EN: This item is currently out of stock. Expected availability: [DATE].
+AR: المنتج غير متوفر حاليًا. التوفر المتوقع: [DATE].
+
+## 019. Upsell
+EN: You may also like [ADDON] for an extra [ADDON_PRICE] BHD.
+AR: ممكن يناسبك أيضًا [ADDON] مقابل [ADDON_PRICE] د.ب إضافية.
+
+## 020. Closing
+EN: Perfect, I’ll proceed now and keep you updated.
+AR: ممتاز، سأبدأ الآن وأوافيك بالتحديثات.
+
+## 021. Pricing Inquiry
+EN: Thanks for your message. The price for [SERVICE] starts from [PRICE] BHD.
+AR: شكرًا لرسالتك. سعر [SERVICE] يبدأ من [PRICE] د.ب.
+
+## 022. Discount Request
+EN: I can offer [DISCOUNT]% for confirmation today.
+AR: أقدر أقدم خصم [DISCOUNT]% في حال التأكيد اليوم.
+
+## 023. Follow-up
+EN: Just checking in 👋 Did you get a chance to review the quote?
+AR: مجرد متابعة سريعة 👋 هل قدرت تراجع عرض السعر؟
+
+## 024. Payment Reminder
+EN: Friendly reminder: invoice #[INV_NO] of [AMOUNT] BHD is due on [DATE].
+AR: تذكير ودي: الفاتورة #[INV_NO] بقيمة [AMOUNT] د.ب مستحقة بتاريخ [DATE].
+
+## 025. Complaint Handling
+EN: Sorry for the inconvenience. I will resolve this by [TIME].
+AR: نعتذر عن الإزعاج، وسيتم حل الموضوع قبل [TIME].
+
+## 026. Appointment Confirmation
+EN: Confirmed ✅ Your booking is on [DATE] at [TIME].
+AR: تم التأكيد ✅ حجزك يوم [DATE] الساعة [TIME].
+
+## 027. Reschedule
+EN: No problem, we can move your booking to [NEW_DATE] at [NEW_TIME].
+AR: أكيد، نقدر نغير الحجز إلى [NEW_DATE] الساعة [NEW_TIME].
+
+## 028. Out of Stock
+EN: This item is currently out of stock. Expected availability: [DATE].
+AR: المنتج غير متوفر حاليًا. التوفر المتوقع: [DATE].
+
+## 029. Upsell
+EN: You may also like [ADDON] for an extra [ADDON_PRICE] BHD.
+AR: ممكن يناسبك أيضًا [ADDON] مقابل [ADDON_PRICE] د.ب إضافية.
+
+## 030. Closing
+EN: Perfect, I’ll proceed now and keep you updated.
+AR: ممتاز، سأبدأ الآن وأوافيك بالتحديثات.

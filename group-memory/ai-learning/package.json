@@ -1,0 +1,23 @@
+{
+  "name": "ai-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ig:extract": "node scripts/ig_extract.mjs",
+    "ig:add": "node scripts/ig_add.mjs",
+    "ig:auth": "node scripts/ig_auth_from_cookie.mjs",
+    "ig:auth-check": "node scripts/ig_auth_check.mjs",
+    "ig:collect": "node scripts/ig_collect_links.mjs",
+    "ig:sync": "node scripts/ig_sync_links.mjs",
+    "ig:auth-cookies": "node scripts/ig_auth_from_cookies_file.mjs ./data/ig-cookies.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.58.2"
+  }
+}

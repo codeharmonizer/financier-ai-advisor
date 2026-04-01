@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "project-manager": {
+      "version": "1.0.0",
+      "installedAt": 1771543615115
+    },
+    "cto": {
+      "version": "1.0.4",
+      "installedAt": 1771543617285
+    },
+    "ops-dashboard": {
+      "version": "1.0.1",
+      "installedAt": 1771543619687
+    },
+    "planning-with-files": {
+      "version": "1.2.0",
+      "installedAt": 1771543752536
+    },
+    "designer": {
+      "version": "1.0.0",
+      "installedAt": 1772054934615
+    }
+  }
+}

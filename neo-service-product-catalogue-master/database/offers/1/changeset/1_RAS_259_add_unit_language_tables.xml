@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="offers-1_1" author="Duaa Ebrahim">
+        <comment>RAS-259 add unit and language tables</comment>
+        <sqlFile path="database/offers/1/rollout/1_RAS_259_add_unit_language_tables.sql"/>
+        <rollback>
+            <sqlFile path="database/offers/1/rollback/1_RAS_259_add_unit_language_tables.sql"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

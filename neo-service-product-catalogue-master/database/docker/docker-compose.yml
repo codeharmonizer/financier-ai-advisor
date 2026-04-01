@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  neo_service_product_catalogue:
+    image: postgres
+    container_name: neo_service_product_catalogue
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+        POSTGRES_USER: ila
+        POSTGRES_PASSWORD: Pa55w0rd
+        POSTGRES_DB: neo_service_product_catalogue
+    volumes:
+        - ./postgres:/var/lib/postgresql/data

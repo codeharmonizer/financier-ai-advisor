@@ -1,0 +1,20 @@
+[
+  {
+    "name": "sessionid",
+    "value": "...",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "csrftoken",
+    "value": "...",
+    "domain": ".instagram.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  }
+]

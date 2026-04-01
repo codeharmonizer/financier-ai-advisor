@@ -1,0 +1,3 @@
+lite: 30 templates
+pro: 80 templates
+business: 120 templates

@@ -1,0 +1,33 @@
+microservice:
+  neo-service-product-catalogue:
+    cluster: api
+    lite: false
+    version:
+    name:
+    chart:
+    liquibase: true
+    strategy: service
+    worker-cron:
+    cfa: true
+    env:
+      - dev
+      - sit
+      - uat
+      - prod
+    connectivity:
+      db:
+        db-instance-api: true
+        db-instance-almanac: false
+        db-instance-urbis: false
+      amq:
+        broker_name: api-amq
+        enabled: false
+      integrations:
+        service-jumio: false
+        service-postilion: false
+        service-siron: false
+        service-siron-soap: false
+        service-salesforce-crm: false
+        service-urbis: false
+        service-tmsx: false
+        iban-service: false

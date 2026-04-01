@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: 096987977627.dkr.ecr.eu-west-1.amazonaws.com/api/product-catalogue-service
+  tag: latest
+  pullPolicy: Always
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 1Gi
+  requests:
+    cpu: 200m
+    memory: 1Gi
+
+nameOverride: "product-catalogue-service"
+fullnameOverride: "product-catalogue-service"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  paths:
+    - /api/v1/product-catalogue
+
+aws:
+  role: Neo-Uat-Api-CloudWatch-Role
+
+env:
+  spring:
+    profiles:
+      active: uat
+  contentful:
+    accessToken: CLmtELj8A0Bp_9MqizCeqvo0MMgyi2l6o9-sdskXIj8
+    spaceId: 2c8e80nprabl
+    environmentId: SIT
+    ilabankspace:
+      accessToken: null
+      spaceId: dh72gzoq5i91
+      environmentId: UAT
+  pg_write_db_host: null
+  pg_read_db_host: null
+  pg_db_name: neo_service_product_catalogue
+  pg_db_password: null
+  pg_db_username: null

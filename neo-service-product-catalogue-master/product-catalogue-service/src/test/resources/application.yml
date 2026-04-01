@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  profiles:
+    active: local
+  jackson:
+    default-property-inclusion: non_null
+
+logging:
+  config: classpath:logback/logback-${spring.profiles.active}.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "loggers, info, health"
