@@ -58,46 +58,67 @@ An **AI-powered personal finance dashboard** that:
 
 ## 4. MVP Scope (Launch Feature Set)
 
-### 4.1 Must-Have Features (MVP)
+### 4.1 Core Features (Feature Flow Order)
 
-#### A. Account & Wallet Management
-- [ ] Link multiple bank accounts (manual entry + SMS sync)
-- [ ] Display wallet/account balances
-- [ ] Transaction history per account
-- [ ] Manual transaction entry (backup if SMS fails)
-
-#### B. Automatic SMS Transaction Parsing
-- [ ] Bank SMS listener (receive, parse, classify)
-- [ ] Extract: amount, merchant, timestamp, account
-- [ ] Auto-categorize using predefined rules + ML
-- [ ] Deduplicate transactions (prevent double-entries)
-- [ ] Real-time sync to dashboard
-
-#### C. Spending Insights Dashboard
-- [ ] **Total Net Worth** — Sum of all account balances
-- [ ] **This Month's Spending** — Total expenses vs budget
-- [ ] **Income vs Expenses** — Monthly trend chart (last 6 months)
-- [ ] **Expense Breakdown** — Categories (Housing, Food, Transport, Other, Entertainment, Utilities)
-- [ ] **Quick Insights** — "You've spent 40% of budget this month" / "You overspent on Food by SAR 200"
-
-#### D. Budget Management
-- [ ] Set budget per category (monthly)
-- [ ] Track remaining budget in real-time
-- [ ] Alert when category nears limit
-- [ ] Budget performance summary (on-track vs over-budget)
-
-#### E. User Authentication & Settings
-- [ ] Phone-based signup (mobile number)
+#### 1. User Authentication & Onboarding
+- [ ] Phone-based signup (mobile number entry)
 - [ ] SMS OTP verification
-- [ ] Profile settings (name, currency, language)
-- [ ] Category preferences (customize categories)
-- [ ] Notification settings (SMS/push alerts)
+- [ ] Account confirmation (verify phone ownership)
 
-#### F. Mobile-First UI (Per Figma Design)
-- [ ] **Home Screen** — Net worth, budget status, recent transactions
-- [ ] **Wallet Screen** — Account management, add account, manual entry
-- [ ] **Reports Screen** — Spending charts, insights, trends
-- [ ] **Settings Screen** — User profile, categories, notifications
+#### 2. Onboarding Wizard (Smooth Setup Flow)
+- [ ] **Step 1:** User details (name, preferred currency, timezone)
+- [ ] **Step 2:** Bank account linking (add first account with bank name)
+- [ ] **Step 3:** SMS verification (FinSync sends test SMS, user confirms setup)
+- [ ] **Step 4:** Category preferences (select default spending categories)
+- [ ] **Step 5:** Budget setup (set initial monthly budgets per category)
+- [ ] **Step 6:** Completion confirmation ("You're all set!")
+- [ ] Users can skip wizard and complete setup later
+
+#### 3. Account & Wallet Management
+- [ ] Link multiple bank accounts (one account per bank setup)
+- [ ] Display account names and balances
+- [ ] View transaction history per account
+- [ ] Manual transaction entry (fallback if SMS fails)
+- [ ] Edit account details (rename, update)
+- [ ] Remove/disconnect accounts
+
+#### 4. Automatic SMS Transaction Parsing & Ingestion
+- [ ] System listens for bank SMS transactions
+- [ ] Auto-extract: amount, merchant, transaction date/time
+- [ ] Link transaction to correct account
+- [ ] Auto-categorize transaction (using predefined taxonomy)
+- [ ] Prevent duplicate transactions (deduplication)
+- [ ] Real-time sync to dashboard within 5 minutes
+
+#### 5. Dashboard & Spending Insights
+- [ ] **Net Worth Card** — Total balance across all accounts
+- [ ] **Monthly Spending Summary** — Total expenses this month
+- [ ] **Budget Status** — Money remaining per category
+- [ ] **Recent Transactions** — Last 10 transactions with details
+- [ ] **Spending Breakdown** — Visual breakdown by category
+- [ ] **Quick Insights** — AI-generated alerts (overspend warnings, savings opportunities)
+
+#### 6. Budget Management & Tracking
+- [ ] Set monthly budget per category
+- [ ] Track spending against budget in real-time
+- [ ] Visual indicator (progress bar) for budget usage
+- [ ] Alert when spending reaches 80%, 95%, 100% of budget
+- [ ] View budget performance (on-track vs over-budget)
+- [ ] Ability to adjust budget mid-month
+
+#### 7. Reports & Analytics
+- [ ] **Income vs Expenses Chart** — Monthly trends (last 6 months)
+- [ ] **Category Breakdown** — Pie/donut chart of spending by category
+- [ ] **Top Merchants** — Who you spend most with
+- [ ] **Monthly Summary** — Total income, expenses, net change
+- [ ] Export capability (for future Phase 2)
+
+#### 8. Settings & Preferences
+- [ ] Profile settings (name, phone, currency)
+- [ ] Category customization (add/edit/delete categories)
+- [ ] Notification preferences (SMS/push alerts)
+- [ ] Account settings (change password, language)
+- [ ] Privacy & security settings
 
 ### 4.2 MVP Success Criteria
 - ✅ User can link 2+ bank accounts via SMS sync
@@ -109,244 +130,196 @@ An **AI-powered personal finance dashboard** that:
 
 ---
 
-## 5. Post-MVP Features (Future Roadmap)
+## 7. Roadmap & Feature Evolution
 
-### Phase 2 (Months 3–4)
-- [ ] Recurring transactions & subscription tracking
-- [ ] Savings goals with progress visualization
-- [ ] Debt tracking (loans, credit cards, EMIs)
-- [ ] Multi-user household budgeting
-- [ ] Advanced charts (pie, waterfall, forecast)
+### MVP (Launch - Week 6)
+**Core Financial Management:**
+- User signup & authentication
+- Smooth onboarding wizard
+- Multi-account management
+- SMS transaction auto-sync & categorization
+- Dashboard with net worth & spending insights
+- Budget tracking & alerts
+- Reports & analytics
+- Settings & preferences
 
-### Phase 3 (Months 5–6)
-- [ ] Bank API integration (remove SMS dependency)
-- [ ] Mobile app (iOS/Android native)
-- [ ] Export reports (PDF, CSV)
-- [ ] Dark mode & custom themes
-
-### Phase 4 (Post-Launch)
-- [ ] AI spending recommendations
-- [ ] Wealth management tools
-- [ ] Investment tracking
-- [ ] Partner integrations (insurance, investments)
+**Success Target:** 
+- 5K+ active users within month 1
+- 85%+ transaction accuracy
+- 99.5% uptime
 
 ---
 
-## 6. User Workflows (Happy Paths)
+### Phase 2 (Months 3–4) - Goal Tracking & Multi-User
+**Features to Add:**
+- Savings goals with progress visualization
+- Debt tracking (loans, EMIs, credit cards)
+- Recurring transaction detection (subscriptions)
+- Multi-user household budgeting (share budget with family)
+- Monthly insights & spending recommendations
+- Mobile app (iOS/Android native)
 
-### Workflow 1: Onboarding (Day 1)
-```
-User installs app
-    → Signup with phone number
-    → Enter OTP
-    → Add first bank account (SMS)
-    → System receives test SMS
-    → Dashboard shows first transaction
-    → Set budget for key categories
-    → Ready to use
-```
-
-### Workflow 2: Daily Transaction Sync
-```
-User receives bank SMS: "Debit: SAR 150 from Starbucks"
-    → FinSync SMS listener captures it
-    → System extracts amount, merchant, timestamp
-    → ML classifier → "Coffee Shop" → "Food & Dining" category
-    → Dashboard updates in real-time
-    → User sees "Food budget: 65% used" alert (if near limit)
-```
-
-### Workflow 3: Monthly Budget Review
-```
-User opens "Reports" screen on day 25 of month
-    → Sees income vs expenses chart
-    → Spending breakdown by category (pie chart)
-    → 3 categories flagged as over-budget (red)
-    → Insight: "You've spent 45% more on Transport this month"
-    → User can adjust next month's budget
-```
-
-### Workflow 4: Emergency Overspend
-```
-User spending reaches 95% of monthly budget (2 weeks early)
-    → System sends alert SMS + push notification
-    → Dashboard shows warning: "Budget limit approaching"
-    → User can temporarily increase budget or review spending
-```
+**Why Phase 2:** Users request goal tracking + family budgeting after using MVP
 
 ---
 
-## 7. Data Models & Core Entities
+### Phase 3 (Months 5–6) - Bank Integration & Customization
+**Features to Add:**
+- Bank API integration (remove SMS dependency, improve accuracy)
+- Export reports (PDF, CSV, email)
+- Dark mode & custom themes
+- Advanced filters & search
+- Category automation (auto-tag merchants)
+- Bill reminders & due date alerts
 
-### User
-```
-{
-  userId (UUID)
-  phoneNumber (E.164)
-  email (optional)
-  currency (SAR, AED, USD, etc.)
-  createdAt
-  settings { language, timezone, notifications }
-}
-```
-
-### Account / Wallet
-```
-{
-  accountId (UUID)
-  userId (FK)
-  accountType (bank, credit_card, cash, savings)
-  bank (AlAhli, ADIB, FAB, etc.)
-  accountName (e.g., "Main Checking")
-  currentBalance
-  lastSyncTime
-  syncStatus (active, inactive)
-}
-```
-
-### Transaction
-```
-{
-  transactionId (UUID)
-  accountId (FK)
-  amount (decimal)
-  currency (SAR, etc.)
-  merchant (string)
-  category (categoryId FK)
-  type (debit, credit)
-  timestamp
-  source (sms_auto, manual_entry, api)
-  status (processed, pending, failed)
-  bankReference (optional, for deduplication)
-}
-```
-
-### Category
-```
-{
-  categoryId (UUID)
-  userId (FK)
-  name (e.g., "Food & Dining")
-  icon (string)
-  color (hex)
-  isDefault (boolean)
-}
-```
-
-### Budget
-```
-{
-  budgetId (UUID)
-  userId (FK)
-  categoryId (FK)
-  amount (decimal, monthly limit)
-  month (YYYY-MM)
-  status (active, completed, paused)
-}
-```
-
-### SMS Event (Raw)
-```
-{
-  smsEventId (UUID)
-  userId (FK)
-  accountId (FK, inferred)
-  rawSmsText (string)
-  parsedData { amount, merchant, timestamp, type }
-  confidence (0–1, ML score)
-  status (parsed, failed)
-  createdAt
-}
-```
+**Why Phase 3:** Power users want deeper features; APIs available for key banks
 
 ---
 
-## 8. API & Integration Contracts
+### Phase 4 (Post-Launch) - Wealth & Investment Tools
+**Features to Add:**
+- Investment portfolio tracking
+- Wealth management dashboards
+- Partner integrations (insurance, investment platforms)
+- AI spending recommendations & optimization
+- Tax report generation
+- Financial health scoring
 
-### SMS Ingestion (Incoming)
-**Trigger:** Bank SMS arrives at user's phone
-```
-POST /sms/webhook
-{
-  "phoneNumber": "+966501234567",
-  "smsText": "Debit: SAR 250.00 from STARBUCKS RIYADH on 02-APR-26 at 14:30",
-  "timestamp": "2026-04-02T14:30:00Z"
-}
-
-Response:
-{
-  "status": "processed",
-  "transactionId": "txn_abc123",
-  "category": "food_dining",
-  "confidence": 0.95
-}
-```
-
-### Get Dashboard Summary
-```
-GET /dashboard/summary?userId=user_123&period=month
-
-Response:
-{
-  "totalBalance": 45000,
-  "monthlyIncome": 12000,
-  "monthlyExpenses": 8500,
-  "budgetStatus": [
-    { "category": "Food", "budgeted": 2000, "spent": 1800, "status": "on_track" },
-    { "category": "Transport", "budgeted": 1500, "spent": 1650, "status": "over_budget" }
-  ],
-  "topInsights": [
-    "You spent 45% more on transport this month"
-  ]
-}
-```
-
-### Get Transactions
-```
-GET /transactions?accountId=acc_123&month=2026-04&limit=50
-
-Response:
-[
-  {
-    "transactionId": "txn_abc123",
-    "amount": 250,
-    "merchant": "STARBUCKS RIYADH",
-    "category": "food_dining",
-    "timestamp": "2026-04-02T14:30:00Z",
-    "type": "debit"
-  }
-]
-```
+**Why Phase 4:** Premium feature tier; requires deeper financial data integration
 
 ---
 
-## 9. Technical Architecture (Backend)
+## 8. Success Metrics (Post-Launch)
 
-### Tech Stack
-- **Framework:** NestJS (Node.js, TypeScript)
-- **Database:** PostgreSQL
-- **Authentication:** JWT, SMS OTP
-- **Messaging:** Redis (queue), SMS gateway (Twilio/local)
-- **Containerization:** Docker
-- **Orchestration:** Kubernetes
-- **API Gateway:** Kong or NGINX
-- **Logging:** ELK or CloudWatch
-- **CI/CD:** GitHub Actions
-
-### 9 Core Modules (NestJS)
-1. **User Management** — Auth, profile, settings
-2. **Account/Wallet** — Bank account linking, balances
-3. **Transaction** — Transaction storage, CRUD
-4. **SMS Sync** — SMS ingestion, parsing, deduplication
-5. **Category** — Category management, default taxonomy
-6. **Budget** — Budget definition, tracking, alerts
-7. **Insights** — Dashboard data, trends, notifications
-8. **Notification** — SMS/push alerts
-9. **Settings** — Currency, language, integrations
+### Workflow 1: Smooth Onboarding Wizard (First-Time User)
+```
+User downloads FinSync app
+    ↓
+Step 1: Phone signup & OTP verification
+    → Enter phone number
+    → Receive SMS OTP
+    → Verify and create account
+    ↓
+Step 2: Personal Setup
+    → Enter name
+    → Select currency (SAR, AED, USD, etc.)
+    → Select timezone
+    ↓
+Step 3: Bank Account Linking (Intuitive)
+    → Select bank from list (Al Ahli, ADIB, FAB, etc.)
+    → Enter account nickname (e.g., "Main Checking")
+    → FinSync sends test SMS
+    → User confirms receipt of SMS in app
+    → Account linked & ready
+    ↓
+Step 4: Category Setup
+    → Review default categories (Food, Transport, etc.)
+    → Skip or customize as needed
+    ↓
+Step 5: Budget Configuration
+    → Set monthly budget for key categories
+    → Or skip for now and set later
+    ↓
+Step 6: Completion
+    → "All set! Your dashboard is ready"
+    → User sees empty dashboard (ready for first transaction)
+```
+**User Outcome:** Fully set up in <3 minutes, ready to sync transactions
 
 ---
 
-## 10. Success Metrics (Post-Launch)
+### Workflow 2: Adding Second Bank Account (Mid-Journey)
+```
+User has been using FinSync for 2 weeks
+    → Opens "Accounts" screen
+    → Taps "+ Add Account"
+    → Selects bank (e.g., ADIB)
+    → Enters account nickname (e.g., "Savings")
+    → FinSync sends test SMS
+    → User confirms → Account added to dashboard
+    → New account transactions sync automatically
+```
+**User Outcome:** Multi-bank setup without re-entering details
+
+---
+
+### Workflow 3: Daily Transaction Auto-Sync
+```
+User receives bank SMS: "Debit: SAR 150 from STARBUCKS RIYADH on 02-APR-26 at 14:30"
+    ↓
+FinSync SMS listener captures it (real-time)
+    ↓
+System extracts: amount (150), merchant (Starbucks), timestamp, account
+    ↓
+AI classifier categorizes: "Food & Dining"
+    ↓
+Dashboard updates instantly:
+    → Recent transactions list shows new transaction
+    → Category total updates (Food: SAR 1,850 / 2,000 budget)
+    → Budget status updates (92% used - warning color)
+    ↓
+User sees alert (if enabled):
+    → SMS: "Your Food budget is 92% used"
+    → Dashboard shows "Food category near limit"
+```
+**User Outcome:** Full visibility of spending without manual entry
+
+---
+
+### Workflow 4: Monthly Budget Review
+```
+User opens "Reports" on day 25 of month
+    ↓
+Dashboard shows:
+    → Total spending: SAR 8,500
+    → Breakdown by category (visual pie chart)
+    → Income vs Expenses trend (last 6 months)
+    ↓
+System highlights issues:
+    → "Transport: 120% of budget (overspent by SAR 200)"
+    → "Food: 110% of budget"
+    → "Shopping: On track (65% used)"
+    ↓
+User can:
+    → View transaction details for over-budget categories
+    → Decide to increase budget for next month
+    → Review merchant spending to find patterns
+```
+**User Outcome:** Data-driven spending awareness
+
+---
+
+### Workflow 5: Emergency Alert (Overspend Prevention)
+```
+User spending reaches 95% of monthly budget (day 14 of month)
+    ↓
+System triggers alert:
+    → SMS: "Alert: You've hit 95% of your monthly budget"
+    → Dashboard shows: "Monthly budget: 95% used - Slow down spending!"
+    ↓
+User can:
+    → Review spending by category
+    → Identify what caused overspend
+    → Increase budget (if justified) or reduce spending
+    → View remaining budget balance (SAR 250 left)
+```
+**User Outcome:** Prevents accidental overspending
+
+---
+
+**UI/UX Designer Responsibility:**
+- Detailed wireframes for each step in the wizard
+- Button placement, colors, typography
+- Mobile responsiveness for all screens
+- Accessibility guidelines
+- Interaction patterns (transitions, animations)
+- Error states and edge cases
+
+*See Figma design file "startup_wizard" for reference.*
+
+---
+
+## 7. Roadmap & Feature Evolution
 
 ### User Metrics
 - **DAU (Daily Active Users):** >10K within 3 months
@@ -368,102 +341,159 @@ Response:
 
 ---
 
-## 11. MVP Launch Timeline
+## 9. MVP Launch Timeline
 
-| Phase | Duration | Deliverable |
-|-------|----------|-------------|
-| **Design & Requirements** | Week 1 | This document + UI finalization |
-| **Backend Development** | Weeks 2–4 | Core APIs, SMS parser, DB schema |
-| **Frontend Development** | Weeks 2–4 | Mobile UI, integration with backend |
-| **SMS Integration** | Week 3 | Bank SMS listener, parser, deduplication |
-| **QA & Testing** | Weeks 4–5 | E2E tests, load testing, security audit |
-| **Staging Deployment** | Week 5 | Full-stack staging environment |
-| **Launch** | Week 6 | Production rollout, monitoring |
+| Phase | Duration | Deliverable | Owner |
+|-------|----------|-------------|-------|
+| **Requirements & Design** | Week 1 | PRD (this doc) + UI/UX specs | PO + UI/UX Designer |
+| **Feature Architecture** | Week 1–2 | Detailed feature specs, wireframes | Feature Architect |
+| **Backend Development** | Weeks 2–4 | NestJS services, DB schema, APIs | Backend Engineer |
+| **Frontend Development** | Weeks 2–4 | Screens, integrations | Frontend Engineer |
+| **SMS Parser** | Weeks 2–3 | Bank SMS listener, ML classification | SMS Parser Agent |
+| **QA & Testing** | Weeks 4–5 | E2E tests, security audit, load tests | QA Agent |
+| **DevOps & Deployment** | Week 5 | Docker, Kubernetes, staging, monitoring | DevOps Agent |
+| **Launch & Monitoring** | Week 6 | Production rollout, live monitoring | All agents |
 
 **MVP Ready By:** Week 6 (~6 weeks from start)
 
 ---
 
-## 12. Constraints & Assumptions
+## 10. Constraints & Assumptions
+
+## 10. Constraints & Assumptions
 
 ### Assumptions
 - Users have SMS-enabled bank accounts (majority have)
 - Transactions are debits/credits to personal accounts
 - SMS format is consistent per bank (can build parsers)
 - Users trust FinSync with transaction data (privacy is priority)
+- Target market is Middle East (SAR, AED currencies primary)
 
 ### Constraints
-- **No Direct Bank APIs** (MVP) — Relies on SMS only (faster to market)
+- **No Direct Bank APIs** (MVP) — Relies on SMS only (faster to market; APIs added Phase 3)
 - **Single Currency per User** (MVP) — Multi-currency in Phase 2
-- **Web-Only Launch** — Mobile app in Phase 2
-- **Manual Category Setup** (MVP) — Uses defaults; users customize later
+- **Web-Only Launch** (MVP) — Mobile app in Phase 2
+- **Manual Category Customization** (MVP) — Uses defaults; users can add later
 
 ### Security Assumptions
 - All SMS data encrypted in transit (TLS) and at rest
 - No bank credentials stored (SMS-only model)
-- User authentication via phone (not email)
+- User authentication via phone OTP (not email)
 - PCI-DSS compliance not required (no card data stored)
 
 ---
 
-## 13. Risk Mitigation
+## 11. Risk Mitigation
 
 | Risk | Probability | Impact | Mitigation |
 |------|-------------|--------|------------|
-| Bank SMS format changes | Medium | High | Build adaptive parser; manual fallback |
-| SMS parser accuracy issues | Medium | Medium | ML model v0; human review + feedback loop |
-| User adoption (depends on SMS marketing) | Medium | High | Referral program + social proof |
-| High SMS processing latency | Low | Medium | Use queue (Redis) + async processing |
-| Database scalability (500K+ txns/month) | Low | High | Partition by userId; read replicas |
+| Bank SMS format changes mid-project | Medium | High | Build adaptive parser with fallback rules; manual review capability |
+| SMS parser accuracy drops below 85% | Medium | Medium | Start with rule-based + human review feedback loop; ML improves over time |
+| User adoption slower than expected | Medium | High | Heavy SMS marketing; referral program; product-market fit validation in week 2 |
+| SMS processing latency exceeds 5 min | Low | Medium | Use Redis queue + async processing; load test early (week 2) |
+| Database scalability issues (500K+ txns) | Low | High | Partition by userId early; read replicas; stress test in week 4 |
 
 ---
 
-## 14. Approval & Sign-Off
+## 12. Approval & Sign-Off
 
 - **Product Owner:** Mohamed Salah
 - **Created:** 2026-04-02
-- **Version:** 1.0 (MVP Specification)
+- **Version:** 1.1 (MVP Specification - Refined)
+- **Status:** Ready for Feature Architect handoff
 
-**Next Step:** Assign to Feature Architect Agent for detailed design breakdown → Backend Engineer → Frontend Engineer → QA
+**Next Steps:**
+1. ✅ UI/UX Designer creates detailed wireframes (Figma: startup_wizard + all screens)
+2. → Feature Architect breaks down into technical design specs
+3. → Backend Engineer builds NestJS services
+4. → Frontend Engineer builds React interfaces
+5. → SMS Parser builds ML classifier
+6. → QA writes test cases
+7. → DevOps prepares infrastructure
 
 ---
 
-## Appendix A: Category Taxonomy (MVP)
+## Appendix A: Default Category Taxonomy (MVP)
 
 ```
 Food & Dining
-  - Restaurants
-  - Coffee & Cafes
+  - Restaurants & Cafes
   - Groceries
+  - Delivery & Takeout
 
-Transport
-  - Fuel
-  - Uber/Taxi
+Transport & Travel
+  - Fuel & Gas
+  - Rideshare (Uber, Careem)
   - Parking
+  - Public Transport
+  - Tolls & Fares
 
-Entertainment
+Entertainment & Recreation
   - Movies & Streaming
-  - Gaming
-  - Events
+  - Gaming & Hobbies
+  - Sports & Fitness
+  - Events & Concerts
 
-Shopping
-  - Clothing
+Shopping & Retail
+  - Clothing & Fashion
   - Electronics
-  - Books
+  - Home & Garden
+  - Books & Media
 
-Utilities
+Utilities & Bills
   - Electricity
   - Water
-  - Internet
-
-Healthcare
-  - Pharmacy
-  - Doctor
+  - Internet & Phone
   - Insurance
 
-Other
+Healthcare & Wellness
+  - Pharmacy
+  - Doctor & Hospital
+  - Dental
+  - Gym & Fitness
+
+Personal & Household
+  - Haircut & Beauty
+  - Laundry & Cleaning
+  - Household Supplies
+
+Business & Work
+  - Office Supplies
+  - Professional Services
+  - Training & Development
+
+Other (Uncategorized)
 ```
 
 ---
 
-**End of Requirements Document**
+## Appendix B: Glossary
+
+- **SMS Sync:** Automatic transaction ingestion via bank SMS notifications
+- **Auto-Categorization:** ML-based classification of transactions into spending categories
+- **Budget Tracking:** Real-time monitoring of spending against set monthly limits
+- **Net Worth:** Total balance across all linked accounts
+- **Onboarding Wizard:** Step-by-step setup flow to configure accounts and preferences
+- **Deduplication:** Prevention of duplicate transaction entries from the same SMS
+
+---
+
+## Appendix C: Responsibility Matrix (RACI)
+
+| Component | PO | UI/UX | Architect | Backend | Frontend | QA | DevOps |
+|-----------|----|----|----------|---------|----------|----|--------|
+| Requirements | R | - | C | C | C | C | - |
+| UI/UX Design | C | R | C | - | C | - | - |
+| Data Models | C | - | R | R | - | - | - |
+| API Contracts | C | - | R | R | C | - | - |
+| Backend Code | - | - | C | R | - | - | C |
+| Frontend Code | - | C | C | - | R | - | - |
+| SMS Parser | - | - | C | R | - | - | - |
+| Testing Strategy | C | - | - | - | - | R | - |
+| Infrastructure | - | - | - | C | - | - | R |
+
+**R = Responsible | A = Accountable | C = Consulted | I = Informed**
+
+---
+
+**End of Requirements Document - MVP Specification v1.1**

@@ -12,15 +12,38 @@ Transform scattered product vision, design mockups, and technical architecture i
 
 ---
 
-## Responsibilities
+## What This Agent DOES (Scope)
 
-1. **Synthesize Requirements** — Ingest Figma design + business context + architecture → PRD
-2. **Define MVP Scope** — What's launch-ready vs post-launch feature
-3. **Clarify User Workflows** — Step-by-step how customers use the product
-4. **Document Data Models** — All entities, relationships, and APIs
-5. **Set Success Metrics** — How we measure if the product works
-6. **Maintain Living Document** — Update REQUIREMENTS.md as scope evolves
-7. **Answer Scope Questions** — Help other agents understand "should we build this?"
+✅ **Define the problem** — Customer pain, use cases, value prop  
+✅ **Define MVP features** — What's in/out of launch (organized by flow)  
+✅ **Define user workflows** — Happy paths showing customer experience  
+✅ **Define success metrics** — How we measure product success  
+✅ **Maintain living PRD** — Update as scope evolves, track changes  
+✅ **Answer "should we build X?"** — Tie decisions back to customer needs  
+✅ **Hand off to specialists** — UI/UX, Feature Architect, QA, DevOps  
+
+---
+
+## What This Agent DOES NOT DO (Boundary)
+
+❌ **Design screens/UX** — That's UI/UX Designer's job  
+❌ **Define data models** — That's Feature Architect's job  
+❌ **Write API specs** — That's Feature Architect's job  
+❌ **Write code** — That's Backend/Frontend Engineer's job  
+❌ **Design tests** — That's QA Agent's job  
+❌ **Design infrastructure** — That's DevOps Agent's job  
+
+**Principle:** Requirements describes WHAT & WHY. Everything else is HOW (delegated).
+
+---
+
+1. **Synthesize Requirements** — Ingest Figma design + business context → PRD
+2. **Define MVP Scope** — What's launch-ready vs post-launch feature (organized by feature flow)
+3. **Clarify User Workflows** — Step-by-step happy paths showing customer experience
+4. **Set Success Metrics** — User, product, and business KPIs
+5. **Maintain Living Document** — Update REQUIREMENTS.md as scope evolves
+6. **Answer Scope Questions** — Help other agents understand "should we build this?"
+7. **Hand Off Cleanly** — Delegate technical architecture to Feature Architect, UI/UX to Designer
 
 ---
 
@@ -49,18 +72,20 @@ oracle --file ./REQUIREMENTS.md \
 A living document (Markdown) with these sections:
 - Problem statement & customer pain
 - Target user personas
-- MVP feature checklist (must-have vs nice-to-have)
-- User workflows (happy paths)
-- Data models & API contracts
-- Success metrics & KPIs
-- Launch timeline & risks
-- Appendices (taxonomy, glossary)
+- MVP feature checklist (organized by feature flow: Signup → Wizard → Dashboard → Accounts → etc.)
+- User workflows (happy paths showing customer experience)
+- Roadmap (MVP, Phase 2, 3, 4 — what and why)
+- Success metrics & KPIs (user, product, business)
+- Constraints & assumptions
+- Risk mitigation
+
+**NOT included:** Data models, API contracts, technical architecture (→ Feature Architect)  
+**NOT included:** UI/UX screens, wireframes, design specs (→ UI/UX Designer)
 
 ### Secondary Outputs
-- **Feature Specification Cards** — Per-feature detail (inputs, outputs, acceptance criteria)
-- **Data Model Diagrams** — ER diagrams (SVG/ASCII art)
-- **API Specification** — OpenAPI/Swagger format (optional, Phase 2)
-- **Scope Change Log** — Track decisions & approvals
+- **Feature Acceptance Criteria** — Per-feature definition (what done looks like)
+- **Roadmap Change Log** — Track decisions & approvals
+- **Scope Clarification Notes** — Answer "should we build X?" questions
 
 ---
 
@@ -69,24 +94,24 @@ A living document (Markdown) with these sections:
 ### Scenario 1: Initial Requirements Synthesis
 ```bash
 #!/bin/bash
-# Input: Figma file + architecture + business context
+# Input: Figma design + business context
 # Output: REQUIREMENTS.md v1.0
 
 oracle \
   --task "You are a Product Manager. \
-          Ingest the FinSync Figma design, 9-module architecture, and Financier business context. \
+          Ingest the FinSync Figma design and business context. \
           Create a comprehensive REQUIREMENTS.md with: \
           1. Problem statement (what customer pain are we solving?) \
-          2. Target user persona \
-          3. MVP features (must-have for launch) \
-          4. User workflows (step-by-step happy paths) \
-          5. Data models (User, Account, Transaction, Category, Budget) \
-          6. API contracts (SMS ingestion, dashboard, transactions) \
-          7. Success metrics & KPIs \
-          8. Launch timeline & risks \
-          Output as markdown, detailed & actionable." \
+          2. Target user persona (who is Ahmed? what does he want?) \
+          3. MVP features organized by flow (Signup → Wizard → Dashboard → Accounts) \
+          4. User workflows (5 happy paths showing smooth experience) \
+          5. Roadmap (MVP, Phase 2, 3, 4 — clear why each phase matters) \
+          6. Success metrics (DAU, accuracy, uptime, retention) \
+          7. Constraints & risks \
+          Output as markdown, clear and actionable. \
+          NOTE: Do NOT include data models, APIs, or technical architecture — \
+          that's the Feature Architect's job. Focus on WHAT and WHY." \
   --file /path/to/figma-design.json \
-  --file /path/to/architecture.md \
   --output /pioneering/REQUIREMENTS.md
 ```
 
@@ -97,50 +122,65 @@ oracle \
 
 oracle \
   --task "Using REQUIREMENTS.md as reference, answer this scope question: \
-          'Should we include recurring transaction categorization in MVP?'\
+          'Should we include dark mode in MVP?'\
           Explain: \
-          - Why it matters (tie to user pain) \
-          - MVP impact (adds how much effort?) \
-          - Post-MVP alternative \
+          - Does it solve customer pain? (check problem statement) \
+          - Does it fit MVP timeline? (check week 1-6 commitment) \
+          - When should we add it? (Phase 1, 2, 3?) \
           - Recommendation (include or defer?)" \
   --file /pioneering/REQUIREMENTS.md \
   --output /pioneering/SCOPE_DECISIONS.md
 ```
 
-### Scenario 3: Feature Deep-Dive
+### Scenario 3: Feature Details Clarification
 ```bash
 # Input: Feature name
-# Output: Detailed feature spec card
+# Output: Acceptance criteria for that feature
 
 oracle \
-  --task "Create a detailed feature specification for 'SMS Auto-Categorization' \
+  --task "Using REQUIREMENTS.md, provide detailed acceptance criteria for: \
+          'Onboarding Wizard' \
           Include: \
           - User story (who, what, why) \
-          - Acceptance criteria (how do we know it's done?) \
-          - Input/output format \
-          - Edge cases (duplicate transactions, failed parses) \
-          - Success metrics (85% accuracy) \
-          - Dependencies (SMS parser, ML model, category taxonomy) \
-          - Effort estimate (T-shirt size: XS/S/M/L/XL)" \
+          - Steps in wizard (Signup → Details → Bank → Categories → Budget → Done) \
+          - Success metrics (should complete in <3 minutes) \
+          - Edge cases (user skips steps, adds account later, etc.) \
+          - What gets handed to Feature Architect for detailed design" \
   --file /pioneering/REQUIREMENTS.md
 ```
 
 ### Scenario 4: Ongoing Refinement
 ```bash
-# Input: Feedback from user testing or team
+# Input: Feedback from user testing or stakeholder
 # Output: Updated REQUIREMENTS.md
 
 oracle \
   --task "Update REQUIREMENTS.md based on this feedback: \
-          'User testing showed users want to see daily spending limits, not just monthly.' \
+          'User testing showed users want daily spending limits, not just monthly.' \
           Changes needed: \
-          1. Update 'Daily Budget' feature description \
-          2. Adjust API contracts to include daily_limit field \
-          3. Update success criteria \
-          4. Re-estimate timeline impact \
-          Output updated REQUIREMENTS.md with CHANGE LOG entry." \
+          1. Add 'Daily Budgets' feature to MVP (where? which section?) \
+          2. Update user workflows to show daily alerts \
+          3. Update success metrics if needed \
+          4. Track change in CHANGE LOG \
+          Output updated REQUIREMENTS.md." \
   --file /pioneering/REQUIREMENTS.md \
   --output /pioneering/REQUIREMENTS.md
+```
+
+### Scenario 5: Handoff to Feature Architect
+```bash
+# When REQUIREMENTS.md is stable, Feature Architect takes next step
+
+oracle \
+  --task "As Feature Architect, read REQUIREMENTS.md and create detailed design specs: \
+          1. Break down each feature into technical requirements \
+          2. Define data models & entities \
+          3. Define API contracts (endpoints, payloads) \
+          4. Define workflows & decision trees \
+          5. Output: FEATURE_SPECS.md (detailed technical blueprint) \
+          This will guide Backend & Frontend engineers." \
+  --file /pioneering/REQUIREMENTS.md \
+  --output /pioneering/FEATURE_SPECS.md
 ```
 
 ---
@@ -169,27 +209,38 @@ oracle \
 
 ## Integration Points
 
-### Inputs From Other Agents
-- **Feature Architect** → Questions on feature scope, API design
-- **Backend Engineer** → Questions on data model complexity
-- **Frontend Engineer** → Questions on user workflow feasibility
-- **QA Agent** → Requirements for test coverage
-- **Product Manager** → Stakeholder feedback, scope changes
+### Key Handoffs
 
-### Outputs To Other Agents
+**1. To UI/UX Designer:**
+- ✅ Gives: REQUIREMENTS.md with feature flows, user workflows, acceptance criteria
+- ← Gets: Detailed wireframes, design specs (Figma screens, interactions)
+- **Note:** Requirements describes WHAT; UI/UX describes HOW users interact with it
+
+**2. To Feature Architect:**
+- ✅ Gives: REQUIREMENTS.md with MVP scope, success metrics, roadmap
+- ← Gets: Detailed feature specifications, data models, API contracts, workflows
+- **Note:** Requirements describes the problem; Feature Architect solves it technically
+
+**3. To Other Agents:**
+- **Backend Engineer** → Uses feature specs to build NestJS services
+- **Frontend Engineer** → Uses feature specs + UI/UX designs to build React
+- **QA Agent** → Uses acceptance criteria to write test cases
+- **DevOps Agent** → Uses success metrics (99.5% uptime) to design infrastructure
+- **Product Manager** → Uses REQUIREMENTS.md to track scope + roadmap
+
+### Agent Workflow Diagram
 ```
-Requirements Agent
-    ↓
-Feature Architect (detailed design specs)
-    ↓
-Backend Engineer (API specs, data models)
-    ↓
-Frontend Engineer (UI/UX specs, workflows)
-    ↓
-QA Agent (acceptance criteria, test cases)
-    ↓
-DevOps Agent (deployment requirements, scaling)
-```
+Requirements Agent (WHAT/WHY)
+    ├─→ UI/UX Designer (DESIGN/INTERACT)
+    │     └─→ Frontend Engineer (BUILD UI)
+    │
+    ├─→ Feature Architect (TECHNICAL DESIGN)
+    │     ├─→ Backend Engineer (BUILD SERVICES)
+    │     └─→ SMS Parser Agent (BUILD CLASSIFIER)
+    │
+    ├─→ QA Agent (ACCEPTANCE CRITERIA)
+    │
+    └─→ DevOps Agent (SUCCESS METRICS)
 
 ---
 
@@ -302,22 +353,25 @@ Scope Question?
 ## How Other Agents Use This
 
 ### Feature Architect
-> "Read REQUIREMENTS.md → extract 'MVP Features' → create detailed design specs per feature"
+> "Read REQUIREMENTS.md → understand customer needs & MVP features → create detailed feature specs (data models, APIs, workflows)"
+
+### UI/UX Designer
+> "Read REQUIREMENTS.md → understand user workflows → design detailed wireframes, screens, interactions (Figma)"
 
 ### Backend Engineer
-> "Read REQUIREMENTS.md → extract 'Data Models & APIs' → code NestJS services"
+> "Read Feature Specs (from Architect) → understand data models & APIs → code NestJS services"
 
 ### Frontend Engineer
-> "Read REQUIREMENTS.md → extract 'User Workflows & MVP Features' → build React screens"
+> "Read Feature Specs + UI/UX designs → understand workflows & screens → build React components"
 
 ### QA Agent
-> "Read REQUIREMENTS.md → extract 'Acceptance Criteria & Success Metrics' → write E2E tests"
+> "Read REQUIREMENTS.md → extract acceptance criteria & success metrics → write E2E tests"
 
 ### DevOps Agent
-> "Read REQUIREMENTS.md → extract 'Success Metrics (99.5% uptime)' → design infrastructure"
+> "Read REQUIREMENTS.md → extract success metrics (99.5% uptime, <2s SMS latency) → design infrastructure"
 
 ### Product Manager
-> "Read REQUIREMENTS.md → sync with stakeholders → request updates via this agent"
+> "Read REQUIREMENTS.md → sync with stakeholders → request updates via this agent → track roadmap"
 
 ---
 
