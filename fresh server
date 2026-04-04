@@ -1,0 +1,19 @@
+ 1. SSH in — set root password or add your SSH key                              
+ 2. Firewall — ufw allow ssh && ufw enable                                      
+ 3. fail2ban — apt install fail2ban                                             
+ 4. Tailscale — install + tailscale up + remove old node from admin console     
+ 5. Tailscale Funnel — re-enable for the Gmail webhook endpoint                 
+ 6. Node.js — install v22 via nodesource                                        
+ 7. OpenClaw — npm install -g openclaw + openclaw init                          
+ 8. Clone workspace — git clone                                                 
+ https://github.com/codeharmonizer/financier-ai-advisor.git into                
+ ~/.openclaw/workspace                                                          
+ 9. OpenClaw config — restore openclaw.json (Gmail hooks, model, channels)      
+ 10. GitHub CLI — install gh + gh auth login                                    
+ 11. gog CLI — install + re-auth with claudealtenative@gmail.com                
+ 12. gcloud SDK — install + set project to financier-finsync                    
+ 13. Gmail Pub/Sub — update push subscription URL to new Funnel endpoint        
+ 14. Claude Code — install + configure                                          
+ 15. Start OpenClaw — openclaw gateway start    
+
+That's it. ~15 steps, fresh server to fully operational.
